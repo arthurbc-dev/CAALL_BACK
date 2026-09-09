@@ -1,0 +1,65 @@
+package entity;
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
+
+@Entity
+@Table(name="tb_usuario")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 100)
+    private  String nome;
+
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private LocalDate dataNascimento;
+
+    @Column(nullable = false, length = 20)
+    private String genero;
+
+    @Column(length = 20)
+    private String telefone;
+
+    @Column(length = 10)
+    private String  cep;
+
+    @Column(length = 100)
+    private String bairro;
+
+    @Column(length = 100)
+    private String cidade;
+
+    @Column(length = 100)
+    private String estado;
+
+    @Column(name = "tipo_sanguineo", length = 5)
+    private String tipoSanguineo;
+
+    @Column(columnDefinition = "TEXT")
+    private String alergias;
+
+    @Column(columnDefinition = "TEXT")
+    private String medicamentos;
+
+    @Column(nullable = false, unique = true, length = 150)
+    private String email;
+
+    @Column(nullable = false)
+    private String senha;
+
+    @Column(name = "fcm_token")
+    private String fcmToken;
+}
