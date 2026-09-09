@@ -24,10 +24,10 @@ public class Usuario {
     private  String nome;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String genero;
 
     @Column(length = 20)

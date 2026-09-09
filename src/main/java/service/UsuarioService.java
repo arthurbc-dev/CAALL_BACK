@@ -6,6 +6,7 @@ import entity.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import repository.UsuarioRepository;
 
@@ -13,11 +14,11 @@ import repository.UsuarioRepository;
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository){
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder){
         this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -25,12 +26,13 @@ public class UsuarioService {
         if(usuarioRepository.existsByEmail(dto.getEmail())){
             throw new IllegalArgumentException("O email é informado já está cadastrado");
         }
-            String senhaCriptografiada = passwordEncoder.encode(dto.getSenha());
+            String senhaCriptografada = passwordEncoder.encode(dto.getSenha());
 
         Usuario usuario = Usuario.builder()
                 .nome(dto.getNome())
                 .email(dto.getEmail())
-                .senha(dto.getSenha())
+                .dataNascimento(dto.getDataNascimento())
+                .senha(senhaCriptografada)
                 .fcmToken(dto.getFcmToken())
                 .build();
 
