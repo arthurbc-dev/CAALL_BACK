@@ -1,8 +1,9 @@
-package entity;
+package caal.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Past;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -20,11 +21,14 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private  String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 100)
+    private String usuario;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
+    @Past
     private LocalDate dataNascimento;
 
     @Column(length = 20)
@@ -54,12 +58,12 @@ public class Usuario {
     @Column(columnDefinition = "TEXT")
     private String medicamentos;
 
-    @Column(nullable = false, unique = true, length = 150)
+    @Column(unique = true, length = 150)
     private String email;
 
     @Column(nullable = false)
     private String senha;
 
-    @Column(name = "fcm_token")
+    @Column(name = "fcm_token", nullable = false)
     private String fcmToken;
 }
