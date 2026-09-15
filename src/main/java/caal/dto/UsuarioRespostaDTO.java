@@ -1,4 +1,4 @@
-package dto;
+package caal.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +7,5 @@ import lombok.Getter;
 @Builder
 public class UsuarioRespostaDTO {
     private Long id;
-    private String nome;
-    private String email;
+    private String usuario;
 }
