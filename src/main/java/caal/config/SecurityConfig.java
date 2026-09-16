@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // permite um post sem sessão para cadastro
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/v1/usuarios/cadastro").permitAll()// especifica a rota e permite cadastro sem token
+                        .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .anyRequest().authenticated() // exige autenticação para rotas futuras
                 )
                 .build();

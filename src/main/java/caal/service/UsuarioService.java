@@ -55,7 +55,7 @@ public class UsuarioService {
                 .medicamentos(dto.getMedicamentos())
                 .build();
 
-        Usuario usuarioSalvo = usuarioRepository.save(usuario);
+
 
         if (possuiDadosResponsavel(dto.getResponsavel())) {
             ResponsavelCadastroDTO responsavelDto = dto.getResponsavel();
@@ -73,6 +73,8 @@ public class UsuarioService {
 
             usuario.setResponsavel(responsavel);
         }
+
+        Usuario usuarioSalvo = usuarioRepository.save(usuario);
 
 
 
