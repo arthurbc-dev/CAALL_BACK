@@ -49,6 +49,9 @@ public class Usuario {
     @Column(length = 100)
     private String estado;
 
+    @Column(columnDefinition = "TEXT")
+    private String condicaoSaude;
+
     @Column(name = "tipo_sanguineo", length = 5)
     private String tipoSanguineo;
 
@@ -66,4 +69,8 @@ public class Usuario {
 
     @Column(name = "fcm_token", nullable = false)
     private String fcmToken;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "responsavel_id")
+    private Responsavel responsavel;
 }
