@@ -21,12 +21,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100)
+    @Column(nullable = false, length = 100)
     private  String nome;
 
     @Column(nullable = false, unique = true, length = 100)
     private String usuario;
 
+    @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
     @Past
     private LocalDate dataNascimento;
