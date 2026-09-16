@@ -1,6 +1,6 @@
 package caal.controller;
 
-import caal.dto.CadastroAcessoDTO;
+import caal.dto.UsuarioCadastroDTO;
 import caal.dto.UsuarioRespostaDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastro")
-    public ResponseEntity<UsuarioRespostaDTO> cadastrar(@Valid @RequestBody CadastroAcessoDTO dto){
+    public ResponseEntity<UsuarioRespostaDTO> cadastrar(@Valid @RequestBody UsuarioCadastroDTO dto){
         UsuarioRespostaDTO usuarioCriado = usuarioService.cadastrarUsuario(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCriado);
     }
