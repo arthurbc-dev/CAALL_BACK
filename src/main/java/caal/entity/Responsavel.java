@@ -1,5 +1,7 @@
 package caal.entity;
+import caal.enums.Genero;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,8 +28,9 @@ public class Responsavel {
     @Column(length = 20)
     private String telefone;
 
-    @Column
-    private String genero;
+    @NotNull(message = "O gênero é obrigatório")
+    private Genero genero;
+
 
     @Column
     private String cep;

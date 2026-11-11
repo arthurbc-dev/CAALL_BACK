@@ -1,6 +1,8 @@
 package caal.dto;
 
 
+import caal.enums.Genero;
+import caal.enums.TipoSanguineo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -24,8 +26,9 @@ public class UsuarioCadastroDTO {
 
     @Email(message = "Informe um e-mail válido")
     private String email;
-    
-    private String genero;
+
+    @NotNull(message = "O gênero é obrigatório")
+    private Genero genero;
 
     private String telefone;
 
@@ -37,7 +40,7 @@ public class UsuarioCadastroDTO {
 
     private String estado;
 
-    private String tipoSanguineo;
+    private TipoSanguineo tipoSanguineo;
 
     private String alergias;
 
@@ -58,5 +61,12 @@ public class UsuarioCadastroDTO {
 
     @Valid
     private ResponsavelCadastroDTO responsavel;
+
+    @NotBlank(message = "O CPF é obrigatório")
+    @Pattern(
+            regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}",
+            message = "CPF deve estar no formato 000.000.000-00"
+    )
+    private String cpf;
 
 }
