@@ -9,7 +9,9 @@ import java.util.Optional;
 @Repository // indica que é um DAO
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByUsuario(String usuario);
+    boolean existsByCpf(String cpf);
     Optional<Usuario> findByUsuario(String usuario);
+
 
 
 }
