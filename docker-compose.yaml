@@ -1,27 +1,62 @@
-services:
-  postgres:
-    image: postgres:17
-    container_name: caall-postgres
-    environment:
-      POSTGRES_DB: caall_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123456
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+version: '3.8'
 
-  app:
-    build: .
-    container_name: caall-back
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: meu_banco
+    restart: always
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/caall_db
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: 123456
+      POSTGRES_DB: meubanco
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: senha_segura
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - db-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U usuario -d meubanco"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: meu_backend
+    restart: always 
+    depends_on:
+      - db
+    networks:
+      - db-net
+      - back-net
+  frontend:
+    build:
+      context: ../CAALL_FRONT
+      dockerfile: Dockerfile
+    container_name: meu_frontend
+    restart: always
+    networks:
+      - front-net
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: meu_cloudflared
+    restart: always
+    command: tunnel run
+    environment:
+     TUNNEL_TOKEN: ${TUNNEL_TOKEN:?Defina o TUNNEL_TOKEN no arquivo .env}
+    networks:
+      - back-net
+      - front-net
+    depends_on: 
+        - backend
+networks:
+  db-net:
+    driver: bridge
+    internal: true
+  back-net:
+    driver: bridge
+  front-net:
+    driver: bridge
 
 volumes:
-  postgres_data:
+  pgdata:
