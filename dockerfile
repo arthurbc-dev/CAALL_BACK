@@ -1,15 +1,20 @@
-FROM eclipse-temurin:17-jre-alpine
 
-RUN addgroup -S spring && adduser -S spring -G spring
+FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
-COPY target/*.jar app.jar
+COPY . .
 
-RUN chown spring:spring app.jar
+RUN mvn clean package -DskipTests
 
-USER spring
+FROM eclipse-temurin:17-jre-jammy
 
-EXPOSE 8080
+WORKDIR /app
+
+COPY --from=builder /app/target/*.jar app.jar
+
+RUN useradd --system --uid 10001 appuser
+
+USER appuser
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
