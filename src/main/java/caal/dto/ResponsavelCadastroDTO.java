@@ -1,6 +1,7 @@
 package caal.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,14 +12,10 @@ import java.time.LocalDate;
 public class ResponsavelCadastroDTO {
     private String nome;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataNascimento;
+    @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 números")
+    private String cpf;
 
-    private String genero;
+    @Pattern(regexp = "\\d{11}", message = "Telefone deve conter 11 números")
     private String telefone;
-    private String cep;
-    private String bairro;
-    private String cidade;
-    private String estado;
 
 }

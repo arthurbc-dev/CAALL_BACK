@@ -30,6 +30,8 @@ public class UsuarioCadastroDTO {
     @NotNull(message = "O gênero é obrigatório")
     private Genero genero;
 
+    @NotBlank(message = "Telefone é obrigatório")
+    @Pattern(regexp = "\\d{11}", message = "Telefone deve conter 11 números")
     private String telefone;
 
     private String  cep;
@@ -62,11 +64,7 @@ public class UsuarioCadastroDTO {
     @Valid
     private ResponsavelCadastroDTO responsavel;
 
-    @NotBlank(message = "O CPF é obrigatório")
-    @Pattern(
-            regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}",
-            message = "CPF deve estar no formato 000.000.000-00"
-    )
+    @NotBlank(message = "CPF é obrigatório")
+    @Pattern(regexp = "\\d{11}", message = "CPF deve conter 11 números")
     private String cpf;
-
 }

@@ -5,11 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication(scanBasePackages = {
-        "caal.config",
-        "caal.controller",
-        "caal.service"
-})
+@SpringBootApplication
 @EntityScan(basePackages = "caal.entity")
 @EnableJpaRepositories(basePackages = "caal.repository")
 public class CaalAplicacao {

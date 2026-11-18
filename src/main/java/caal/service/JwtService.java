@@ -31,4 +31,13 @@ public class JwtService {
                 .compact();
     }
 
+    public String validarEExtrairUsuario(String token) {
+        return Jwts.parser()
+                .verifyWith(chave)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
 }
+
